@@ -4,7 +4,7 @@ It will also be responsible for rendering the chatroom page.
 """
 
 from fastapi import APIRouter, Request, Form
-from fastapi.templating import Jinja2Templates
+from starlette.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 import random
 

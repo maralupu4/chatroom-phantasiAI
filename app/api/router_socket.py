@@ -54,8 +54,10 @@ manager = ConnectionManager()
 will manage user connections and message transmission in the chatroom.
 """
 @router.websocket("/{room_id}/{user_id}")
-async def websocket_endpoint(websocket: WebSocket, room_id: int, user_id: int, username: str):  # route
-    await manager.connect(websocket, room_id, user_id)  # connects the user to the room
+async def websocket_endpoint(websocket: WebSocket, room_id: int, user_id: int):
+    # Get username from query parameters
+    username = websocket.query_params.get("username", f"User_{user_id}")
+    await manager.connect(websocket, room_id, user_id)
     await manager.broadcast(f"{username} (ID: {user_id}) has joined the chat.", room_id, user_id)  # broadcasts the message to all users in the room
     # Receiving and sending messages in the chatroom
     try: 
