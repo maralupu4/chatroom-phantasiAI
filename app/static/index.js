@@ -4,8 +4,20 @@ const roomId = roomData.getAttribute("data-room-id");
 const username = roomData.getAttribute("data-username");
 const userId = roomData.getAttribute("data-user-id");
 
+// pick ws:// or wss:// depending on http/https
+const scheme = window.location.protocol === "https:" ? "wss" : "ws";
+
+// use the same host (IP/domain + port) the page was loaded from
+const host = window.location.host; // 10.36.138.226:8000
+
+// build WebSocket URL
+const ws = new WebSocket(`${scheme}://${host}/ws/chat/${roomId}/${userId}?username=${username}`);
+
 // set up WebSocket connection
-const ws = new WebSocket(`ws://localhost:8000/ws/chat/${roomId}/${userId}?username=${username}`);
+//const ws = new WebSocket(`ws://localhost:8000/ws/chat/${roomId}/${userId}?username=${username}`);
+// set up WebSocket connection - use current hostname so it works from any computer
+//const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+//const ws = new WebSocket(`${protocol}//${window.location.host}/ws/chat/${roomId}/${userId}?username=${username}`);
 
 // event trackers 
 ws.onopen = () => {
